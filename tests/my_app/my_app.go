@@ -21,7 +21,7 @@ func WelcomeByNameHandler(res http.ResponseWriter, req *http.Request){
 	if name == "" {
 		name = "World"
 	}
-	fmt.Fprint(res, "Hello %s!", name)
+	fmt.Fprintf(res, "Hello %s!", name)
 }
 
 func JsonHandler(res http.ResponseWriter, req *http.Request){

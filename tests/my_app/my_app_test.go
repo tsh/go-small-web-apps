@@ -12,9 +12,35 @@ import (
 func TestHomePageHandler(t *testing.T) {
 	assert := assert.New(t)
 
+	mux := my_app.NewMux()
 	res := httptest.NewRecorder()  // mock
 	req, _ := http.NewRequest("GET", "/", nil)
-	my_app.HomePageHandler(res, req)
+	mux.ServeHTTP(res, req)
 
 	assert.Equal(res.Code, 200)
+	assert.Equal(res.Body.String(), "Hello World!")
+}
+
+func TestWelcomeByNameHandler_WithoutName(t *testing.T) {
+	assert := assert.New(t)
+
+	mux := my_app.NewMux()
+	res := httptest.NewRecorder()  // mock
+	req, _ := http.NewRequest("GET", "/hello", nil)
+	mux.ServeHTTP(res, req)
+
+	assert.Equal(res.Code, 200)
+	assert.Equal(res.Body.String(), "Hello World!")
+}
+
+func TestWelcomeByNameHandler_WithName(t *testing.T) {
+	assert := assert.New(t)
+
+	mux := my_app.NewMux()
+	res := httptest.NewRecorder()  // mock
+	req, _ := http.NewRequest("GET", "/hello?name=Mark", nil)
+	mux.ServeHTTP(res, req)
+
+	assert.Equal(res.Code, 200)
+	assert.Equal(res.Body.String(), "Hello Mark!")
 }
